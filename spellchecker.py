@@ -1,14 +1,38 @@
 import time
 
+import multiDictionary
 import multiDictionary as md
 
 class SpellChecker:
 
     def __init__(self):
-        pass
+        self.multiDictionary = md.MultiDictionary()
 
     def handleSentence(self, txtIn, language):
-        pass
+        print("\n"+txtIn)
+        txtIn = txtIn.strip().lower()
+        txtIn = replaceChars(txtIn)
+        #ricerca con in
+        paroleAnalizzate,tempo = self.multiDictionary.searchWord(txtIn, language)
+        print("\nParole sbagliate:")
+        for parolaRicca in paroleAnalizzate:
+            if not parolaRicca.corretta:
+                print(f"{parolaRicca}")
+        print(f"tempo impiegato per la ricerca: {tempo}")
+        #ricerca con for
+        paroleAnalizzate, tempo = self.multiDictionary.ricercaFor(txtIn, language)
+        print("\nParole sbagliate:")
+        for parolaRicca in paroleAnalizzate:
+            if not parolaRicca.corretta:
+                print(f"{parolaRicca}")
+        print(f"tempo impiegato per la ricerca: {tempo}")
+        #ricerca dicotomica
+        paroleAnalizzate, tempo = self.multiDictionary.ricercaDicotomica(txtIn, language)
+        print("\nParole sbagliate:")
+        for parolaRicca in paroleAnalizzate:
+            if not parolaRicca.corretta:
+                print(f"{parolaRicca}")
+        print(f"tempo impiegato per la ricerca: {tempo}")
 
     def printMenu(self):
         print("______________________________\n" +
@@ -21,6 +45,12 @@ class SpellChecker:
               "4. Exit\n" +
               "______________________________\n")
 
+    def stampaTutto(self,language):
+        self.multiDictionary.printDic(language)
+
 
 def replaceChars(text):
-    pass
+    chars="\\`*_{}[]()>#+-.!$%^;,=_~"
+    for c in chars:
+        text=text.replace(c,"")
+    return text

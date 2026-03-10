@@ -29,4 +29,7 @@ while(True):
     if int(txtIn) == 4:
         break
 
-
+    if int(txtIn) == 5:
+        txtIn = input("inserisci una lingua\n")
+        sc.stampaTutto(txtIn)
+        continue
